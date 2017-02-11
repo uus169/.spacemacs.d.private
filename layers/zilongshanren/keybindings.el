@@ -23,7 +23,7 @@
 (define-key global-map (kbd "C-c y") 'youdao-dictionary-search-at-point+)
 (define-key global-map (kbd "<f9>") 'org-capture)
 (define-key global-map (kbd "C-c t") 'org-capture)
-(define-key global-map (kbd "<f8>") 'zilongshanren/show-current-buffer-major-mode)
+;; (define-key global-map (kbd "<f8>") 'zilongshanren/show-current-buffer-major-mode)
 
 (global-set-key (kbd "C-c b") 'org-iswitchb)
 (global-set-key (kbd "C-c i e") 'spacemacs/auto-yasnippet-expand)
@@ -179,3 +179,41 @@
   (global-set-key (kbd "s-n") 'make-frame)
   (global-set-key (kbd "s-z") 'undo-tree-undo)
   (global-set-key (kbd "s-Z") 'undo-tree-redo))
+
+
+;;; Enable helm-gtags-mode
+(add-hook 'c-mode-hook 'helm-gtags-mode)
+(add-hook 'c++-mode-hook 'helm-gtags-mode)
+(add-hook 'asm-mode-hook 'helm-gtags-mode)
+(add-hook 'java-mode-hook 'helm-gtags-mode)
+
+;; customize
+(custom-set-variables
+ '(helm-gtags-path-style 'relative)
+ '(helm-gtags-ignore-case t)
+ '(helm-gtags-auto-update t))
+
+;; key bindings
+(with-eval-after-load 'helm-gtags
+  (define-key helm-gtags-mode-map (kbd "<f5>") 'helm-gtags-select-path)
+  (define-key helm-gtags-mode-map (kbd "<f6>") 'helm-gtags-parse-file)
+  (define-key helm-gtags-mode-map (kbd "<f7>") 'helm-gtags-select)
+  (define-key helm-gtags-mode-map (kbd "<f8>") 'helm-gtags-find-files)
+  (define-key helm-gtags-mode-map (kbd "C-c g ]") 'helm-gtags-find-tag-from-here)
+  (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+  (define-key helm-gtags-mode-map (kbd "C-c g b") 'helm-gtags-find-symbol)
+  (define-key helm-gtags-mode-map (kbd "C-c g e") 'helm-gtags-find-pattern)
+  (define-key helm-gtags-mode-map (kbd "C-c g f") 'helm-gtags-find-files)
+  (define-key helm-gtags-mode-map (kbd "C-c g d") 'helm-gtags-parse-file)
+  (define-key helm-gtags-mode-map (kbd "C-c g h") 'helm-gtags-display-browser)
+  (define-key helm-gtags-mode-map (kbd "C-c g n") 'helm-gtags-next-history)
+  (define-key helm-gtags-mode-map (kbd "C-c g r") 'helm-gtags-find-rtag)
+  (define-key helm-gtags-mode-map (kbd "C-c g s") 'helm-gtags-select)
+  (define-key helm-gtags-mode-map (kbd "C-c g t" ) 'helm-gtags-find-tag)
+  (define-key helm-gtags-mode-map (kbd "C-c g p") 'helm-gtags-previous-history)
+  (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-previous-history)
+  (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-next-history))
+
+
+(define-key global-map (kbd "<f4>") 'helm-semantic-or-imenu)
+(global-set-key (kbd "M-.") 'helm-gtags-next-history)
